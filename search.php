@@ -22,7 +22,7 @@ $vars = "'$source', '$destination', '$forward', '$comeback', '$class', '$infant'
 
 ?>
 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
