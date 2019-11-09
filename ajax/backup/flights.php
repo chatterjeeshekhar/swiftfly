@@ -78,12 +78,13 @@ function processData($sessionId, $response){
 	$flightArr = array();
 	$response = json_decode($response);
 	$legs = ($response->Legs);
+	$cnt = count($legs);
 	for($i=0; $i<count($legs); $i++){
 		$r = $legs[$i];
-		$tempArr = array("id" => $r->Id, "source" => $r->OriginStation, "destination" => $r->DestinationStation, "departure" => $r->Departure, "arrival" => $r->Arrival, "duration" => $r->Duration, "stops" => $r->Stops,  "carrier" => $r->FlightNumbers, "direction" => $r->Directionality);
+		$tempArr = array("id" => $r->Id, "source" => $r->OriginStation, "destination" => $r->DestinationStation, "departure" => $r->Departure, "arrival" => $r->Arrival, "duration" => $r->Duration, "stop_count" => count($r->Stops), "stops" => $r->Stops,  "carrier" => $r->FlightNumbers, "direction" => $r->Directionality);
 		array_push($flightArr, $tempArr);
 	}
-	$finalArr = array("session" => $sessionId, "query" => $response->Query, "carriers" => $response->Carriers, "planners" => $response->Itineraries, "places" => $response->Places, "flights" => $flightArr);
+	$finalArr = array("session" => $sessionId, "flight_count" => $cnt, "query" => $response->Query, "carriers" => $response->Carriers, "planners" => $response->Itineraries, "places" => $response->Places, "flights" => $flightArr);
 	return $finalArr;
 }
 
