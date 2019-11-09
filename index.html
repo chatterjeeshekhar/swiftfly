@@ -51,7 +51,7 @@
 			var str = select.value;
 			if(str.length>=3){
 				document.getElementById(id).classList.add("loadingBox");
-				$.get("/ajax/flights/airportCode.php?q="+str, function(data){
+				$.get("ajax/flights/airportCode.php?q="+str, function(data){
 					var j = JSON.parse(data);
 					if(j["status"]=="200"){
 						//alert(j["msg"]);
@@ -142,7 +142,7 @@
 				<div class="clearfix"> </div>	
 				<div class="resp-tabs-container">
 					<div class="tab-1 resp-tab-content roundtrip">
-						<form action="/search" method="post" id="form1" onsubmit="return false;" autocomplete="off" >
+						<form action="search" method="post" id="form1" onsubmit="return false;" autocomplete="off" >
 							<div class="from">
 								<h3>From</h3>
 								<input type="text" id="source1" name="source" list="source1list" class="city1" onKeyUp="getCode(this.id)" placeholder="Type Departure City" required="">
@@ -221,7 +221,7 @@
 						</form>						
 					</div>		
 					<div class="tab-1 resp-tab-content oneway">
-						<form action="/search" id="form2" method="post" onsubmit="return false;" autocomplete="off">
+						<form action="search" id="form2" method="post" onsubmit="return false;" autocomplete="off">
 							<div class="from">
 								<h3>From</h3>
 								<input type="text" id="source2" list="source2list" class="city1" name="source" onKeyUp="getCode(this.id)" placeholder="Type Departure City" required="">
@@ -293,7 +293,7 @@
 								
 					</div>
 					<div class="tab-1 resp-tab-content hotel">
-						<form action="/hotels" id="form3" method="post">
+						<form action="hotels" id="form3" method="post">
 							<div class="from">
 								<h3>From</h3>
 								<input type="text" id="hotels" list="hotellist" class="city1" name="q" placeholder="Type Hotel Name" required="">
