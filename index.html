@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Flight Ticket Booking a Flat Responsive Widget Template :: w3layouts</title>
+	<link rel="stylesheet" href="css/style.css">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300italic,300,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="Flight Ticket Booking  Widget Responsive, Login Form Web Template, Flat Pricing Tables, Flat Drop-Downs, Sign-Up Web Templates, Flat Web Templates, Login Sign-up Responsive Web Template, Smartphone Compatible Web Template, Free Web Designs for Nokia, Samsung, LG, Sony Ericsson, Motorola Web Design" />
+	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+		
+</head>
+<body>
+<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>	
+<script async src='https://www.googletagmanager.com/gtag/js?id=UA-149859902-1'></script>
+<script>
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-149859902-1');
+</script>
+<style type="text/css">
+.loadingBox {
+    background-color: #ffffff;
+    background-image: url("images/buffer.gif");
+    background-size: 25px 25px;
+    background-position:right 30px center;
+    background-repeat: no-repeat;
+}
+</style>
+<script>
+     window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+     ga('create', 'UA-149859902-1', 'demo.w3layouts.com');
+     ga('require', 'eventTracker');
+     ga('require', 'outboundLinkTracker');
+     ga('require', 'urlChangeTracker');
+     ga('send', 'pageview');
+   </script>
+<script async src='js/autotrack.js'></script>
+
+<meta name="robots" content="noindex">
+<body><link rel="stylesheet" href="images/demobar_w3_16oct2019.css">
+	<!-- Demo bar start -->
+	<script type="text/javascript">
+		function getCode(id){
+			document.getElementById(id).value = document.getElementById(id).value.toUpperCase();
+			var select = document.getElementById(id);
+			var str = select.value;
+			if(str.length>=3){
+				document.getElementById(id).classList.add("loadingBox");
+				$.get("/ajax/flights/airportCode.php?q="+str, function(data){
+					var j = JSON.parse(data);
+					if(j["status"]=="200"){
+						//alert(j["msg"]);
+						clearOptions(id);
+						addOptions(id, j["msg"]);
+					} else {
+						clearOptions(id);
+					}
+					document.getElementById(id).classList.remove("loadingBox");
+				});
+			}
+		}
+		function addOptions(id, data){
+			str = id+"list";
+			$("#"+str).find("option").remove();
+              $("#"+str).append($("<option/>").attr("value", "").text("---Select Airport---"));
+              var j = JSON.parse(JSON.stringify(data));
+              //alert(j["count"]);
+              //alert(j[0]);
+              if(j["count"]==0){
+              	Swal.fire({
+				  title: 'Error!',
+				  text: 'Airport not found',
+				  icon: 'error',
+				  confirmButtonText: 'Ok'
+				});
+              }
+              for($i=0; $i<j["count"]; $i++) {
+                $("#"+str).append($("<option/>").attr({"value":j["rows"][$i].airportCode}).text(j["rows"][$i].placename));
+              }             
+		}
+		function clearOptions(id){
+			//alert(id);
+			document.getElementById(id+'list').innerHTML = "";
+		}
+		function myFormButton(i){
+			var source = document.getElementById("source"+i).value;
+			var destination = document.getElementById("destination"+i).value;
+			var onward = document.getElementById("onward"+i).value;
+			var adult = parseInt(document.getElementById("adults"+i).innerHTML);
+			var child = parseInt(document.getElementById("children"+i).innerHTML);
+			var infant = parseInt(document.getElementById("infant"+i).innerHTML);
+
+			if(source=="" || destination=="" || onward=="" || adult==0){
+				Swal.fire({
+				  title: 'Error!',
+				  text: 'All fields are mandatory',
+				  icon: 'error',
+				  confirmButtonText: 'Ok'
+				});
+			} else {
+				if(i==1 && (document.getElementById("comeback1").value=="mm/dd/yyyy" || document.getElementById("comeback1").value=="mm%2Fdd%2Fyyyy")){
+					Swal.fire({
+					  title: 'Error!',
+					  text: 'Enter Return Date',
+					  icon: 'warning',
+					  confirmButtonText: 'Ok'
+					});
+				} else {
+					if(source.length!=3 || destination.length!=3){
+						Swal.fire({
+						  title: 'Error!',
+						  text: 'Select the airport from the list',
+						  icon: 'error',
+						  confirmButtonText: 'Ok'
+						});
+					} else {
+						document.getElementById("a"+i).value = adult;
+						document.getElementById("c"+i).value = child;
+						document.getElementById("i"+i).value = infant;
+						document.getElementById("form"+i).submit();
+					}
+				}
+			}
+		}
+	</script>
+
+	<!--<h1>Flight Ticket Booking</h1>-->
+	<center><img src="images/logo.png" height="75"></center>
+	<div class="main-agileinfo">
+		<div class="sap_tabs">			
+			<div id="horizontalTab">
+				<ul class="resp-tabs-list">
+					<li class="resp-tab-item"><span>Round Trip</span></li>
+					<li class="resp-tab-item"><span>One way</span></li>	
+					<li class="resp-tab-item"><span>Hotels (SG)</span></li>	
+				</ul>	
+				<div class="clearfix"> </div>	
+				<div class="resp-tabs-container">
+					<div class="tab-1 resp-tab-content roundtrip">
+						<form action="/search" method="post" id="form1" onsubmit="return false;" autocomplete="off" >
+							<div class="from">
+								<h3>From</h3>
+								<input type="text" id="source1" name="source" list="source1list" class="city1" onKeyUp="getCode(this.id)" placeholder="Type Departure City" required="">
+								<datalist id="source1list"></datalist>
+							</div>
+							<div class="to">
+								<h3>To</h3>
+								<input type="text" id="destination1" name="destination" list="destination1list" onKeyUp="getCode(this.id)" class="city2" placeholder="Type Destination City" required="">
+								<datalist id="destination1list"></datalist>
+							</div>
+							<div class="clear"></div>
+							<div class="date">
+								<div class="depart">
+									<h3>Depart</h3>
+									<input id="onward1" type="text" name="forward" value="mm/dd/yyyy" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">
+									
+								</div>
+								<div class="return">
+									<h3>Return</h3>
+									<input id="comeback1" type="text" name="comeback" value="mm/dd/yyyy" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">
+									
+								</div>
+								<div class="clear"></div>
+							</div>
+							<div class="class">
+								<h3>Class</h3>
+								<select id="w3_country1" id="myclass" name="myclass" onchange="change_country(this.value)" class="frm-field required">
+									<option value="economy">Economy</option>  
+									<option value="premiumeconomy">Premium Economy</option>   
+									<option value="business">Business</option>   
+									<option value="first">First class</option>   						
+								</select>
+
+							</div>
+							<div class="clear"></div>
+							<div class="numofppl">
+								<div class="adults">
+									<h3>Adult:(12+ yrs)</h3>
+									<div class="quantity"> 
+										<div class="quantity-select">                           
+											<div class="entry value-minus">&nbsp;</div>
+											<div class="entry value" id="adults1">1</div>
+											<div class="entry value-plus active">&nbsp;</div>
+										</div>
+									</div>
+								</div>
+								<input type="hidden" name="child" id="a1">
+								<input type="hidden" name="adult" id="c1">
+								<input type="hidden" name="infant" id="i1">
+								<div class="child">
+									<h3>Child:(2-11 yrs)</h3>
+									<div class="quantity"> 
+										<div class="quantity-select">                           
+											<div class="entry value-minus">&nbsp;</div>
+											<div class="entry value" id="children1">0</div>
+											<div class="entry value-plus active">&nbsp;</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="class">
+									<h3>Infant:(0-2 yrs)</h3>
+									<div class="quantity"> 
+										<div class="quantity-select">                           
+											<div class="entry value-minus">&nbsp;</div>
+											<div class="entry value" id="infant1">0</div>
+											<div class="entry value-plus active">&nbsp;</div>
+										</div>
+									</div>
+								</div>
+								
+								
+							<div class="clear"></div>
+								<button type="button" class="submitBtn" onclick="myFormButton(1)">Search Flights</button>
+							
+						</form>						
+					</div>		
+					<div class="tab-1 resp-tab-content oneway">
+						<form action="/search" id="form2" method="post" onsubmit="return false;" autocomplete="off">
+							<div class="from">
+								<h3>From</h3>
+								<input type="text" id="source2" list="source2list" class="city1" name="source" onKeyUp="getCode(this.id)" placeholder="Type Departure City" required="">
+								<datalist id="source2list"></datalist>
+							</div>
+							<div class="to">
+								<h3>To</h3>
+								<input type="text" id="destination2" list="destination2list" name="destination" onKeyUp="getCode(this.id)" class="city2" placeholder="Type Destination City" required="">
+								<datalist id="destination2list"></datalist>
+							</div>
+							<div class="clear"></div>
+							<div class="depart">
+								<h3>Depart</h3>
+								<input id="onward2" type="text" value="mm/dd/yyyy" name="forward" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">
+								
+							</div>
+								
+							<div class="class">
+								<h3>Class</h3>
+								<select id="w3_country1" id="myclass" name="myclass" onchange="change_country(this.value)" class="frm-field required">
+									<option value="economy">Economy</option>  
+									<option value="premiumeconomy">Premium Economy</option>   
+									<option value="business">Business</option>   
+									<option value="first">First class</option>   					
+								</select>
+
+							</div>
+							<div class="clear"></div>
+							<Br><Br>
+							<div class="clear"></div>
+							<div class="numofppl">
+								<div class="adults">
+									<h3>Adult:(12+ yrs)</h3>
+									<div class="quantity"> 
+										<div class="quantity-select">                           
+											<div class="entry value-minus">&nbsp;</div>
+											<div class="entry value" id="adults2">1</div>
+											<div class="entry value-plus active">&nbsp;</div>
+										</div>
+									</div>
+								</div>
+								<input type="hidden" name="child" id="c2">
+								<input type="hidden" name="adult" id="a2">
+								<input type="hidden" name="infant" id="i2">
+								<div class="child">
+									<h3>Child:(2-11 yrs)</h3>
+									<div class="quantity"> 
+										<div class="quantity-select">                           
+											<div class="entry value-minus">&nbsp;</div>
+											<div class="entry value" id="children2">0</div>
+											<div class="entry value-plus active">&nbsp;</div>
+										</div>
+									</div>
+								</div>								
+							</div>
+							<div class="class">
+									<h3>Infant:(0-2 yrs)</h3>
+									<div class="quantity"> 
+										<div class="quantity-select">                           
+											<div class="entry value-minus">&nbsp;</div>
+											<div class="entry value" id="infant2">0</div>
+											<div class="entry value-plus active">&nbsp;</div>
+										</div>
+									</div>
+								</div>
+							<div class="clear"></div>
+							<button type="button" class="submitBtn" onclick="myFormButton(2)">Search Flights</button>
+						</form>	
+								
+					</div>
+					<div class="tab-1 resp-tab-content hotel">
+						<form action="/hotels" id="form3" method="post">
+							<div class="from">
+								<h3>From</h3>
+								<input type="text" id="hotels" list="hotellist" class="city1" name="q" placeholder="Type Hotel Name" required="">
+								<datalist id="hotellist"></datalist>
+							</div>
+							<div class="clear"></div>
+							<button type="submit" class="submitBtn">Search Hotels</button>
+						</form>
+					</div>	
+		
+				</div>						
+			</div>
+		</div>
+	</div>
+	
+	<!--script for portfolio-->
+		<script src="js/jquery.min.js"> </script>
+		<script src="js/easyResponsiveTabs.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			$(document).ready(function () {
+				$('#horizontalTab').easyResponsiveTabs({
+					type: 'default', //Types: default, vertical, accordion           
+					width: 'auto', //auto or any width like 600px
+					fit: true   // 100% fit in a container
+				});
+			});		
+		</script>
+		<!--//script for portfolio-->
+				<!-- Calendar -->
+				<link rel="stylesheet" href="css/jquery-ui.css" />
+				<script src="js/jquery-ui.js"></script>
+				  <script>
+						  $(function() {
+							$( "#datepicker,#datepicker1,#datepicker2,#datepicker3,#onward1,#onward2,#comeback1" ).datepicker();
+						  });
+
+				  </script>
+			<!-- //Calendar -->
+			<!--quantity-->
+									<script>
+									$('.value-plus').on('click', function(){
+										var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)+1;
+										divUpd.text(newVal);
+									});
+
+									$('.value-minus').on('click', function(){
+										var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)-1;
+										if(newVal>=0) divUpd.text(newVal);
+									});
+									</script>
+								<!--//quantity-->
+						<!--load more-->
+								<script>
+	$(document).ready(function () {
+		size_li = $("#myList li").size();
+		x=1;
+		$('#myList li:lt('+x+')').show();
+		$('#loadMore').click(function () {
+			x= (x+1 <= size_li) ? x+1 : size_li;
+			$('#myList li:lt('+x+')').show();
+		});
+		$('#showLess').click(function () {
+			x=(x-1<0) ? 1 : x-1;
+			$('#myList li').not(':lt('+x+')').hide();
+		});
+	});
+</script>
+<!-- //load-more -->
+<script type="text/javascript" src="node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
+<link rel="stylesheet" href="node_modules/sweetalert2/dist/sweetalert2.min.css">
+
+
+
+</body>
+</html>
