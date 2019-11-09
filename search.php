@@ -100,7 +100,7 @@ function myFormButton(){
 	if(source=="" || destination=="" || onward=="" || adult==0 || onward=="Onward Date"){
 		Swal.fire({
 		  title: 'Error!',
-		  text: 'Onward date is mandatory',
+		  text: 'All fields are mandatory',
 		  icon: 'error',
 		  confirmButtonText: 'Ok'
 		});
@@ -351,7 +351,7 @@ body {
 	</script>
 	<div class="container">
 		<div class="card bg-info text-white">
-			<form action="search" method="get" onsubmit="return false;" id="myform" autocomplete="off">
+			<form action="search" method="post" onsubmit="return false;" id="myform" autocomplete="off">
 			<div class="card-header">
 				Modify Search
 			</div>
