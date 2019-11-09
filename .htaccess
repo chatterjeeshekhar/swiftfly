@@ -1,0 +1,6 @@
+DirectoryIndex index.php index.html
+Options -Indexes
+RewriteEngine on
+RewriteRule ^(.+)\.php$ /$1 [R,L]
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*?)/?$ /$1.php [NC,END]
