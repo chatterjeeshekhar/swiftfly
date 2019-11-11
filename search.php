@@ -345,12 +345,12 @@ body {
 
 	}
 	function cardBody(source_code, source_name, destination_code, destination_name, departure, duration, arrival, stops, price){
-		var card_body = '<div class="card-body"><div class="row"><div class="col-lg-2"><font size="1">Origin</font><h1><span id="source_code">'+source_code+'</span></h1><span id="source_name">'+source_name+'</span></div><div class="col-lg-2" style="border-right:1px solid #000"><font size="1">Destination</font><h1><span id="destination_code">'+destination_code+'</span></h1><span id="destination_name">'+destination_name+'</span></div><div class="col-lg-2" style="text-align:right;"><font size="1">Time (HH:mm)</font><h1><span id="departure">'+departure+'</span></h1>Departure</div><div class="col-lg-1" style="text-align:center;"><Br><b><span id="duration">'+duration+'</span></b><font size="2"><br>Duration</font></div><div class="col-lg-2"><font size="1">Time (HH:mm)</font><h1><span id="arrival">'+arrival+'</span></h1>Arrival</div><div class="col-lg-1"><font size="1">Layovers</font><h1><span id="stops">'+stops+'</span></h1>Stop(s)</div><div class="col-lg-2"><font size="1">Indian Rupees</font><h1>&#8377; <span id="price">'+price+'</span></h1>Price</div></div></div>';
+		var card_body = '<div class="card-body"><div class="row"><div class="col-lg-2"><font size="1">Origin</font><h2><span id="source_code">'+source_code+'</span></h2><span id="source_name">'+source_name+'</span></div><div class="col-lg-2" style="border-right:1px solid #000"><font size="1">Destination</font><h2><span id="destination_code">'+destination_code+'</span></h2><span id="destination_name">'+destination_name+'</span></div><div class="col-lg-2" style="text-align:right;"><font size="1">Time (HH:mm)</font><h2><span id="departure">'+departure+'</span></h2>Departure</div><div class="col-lg-1" style="text-align:center;"><Br><b><span id="duration">'+duration+'</span></b><font size="2"><br>Duration</font></div><div class="col-lg-2"><font size="1">Time (HH:mm)</font><h2><span id="arrival">'+arrival+'</span></h2>Arrival</div><div class="col-lg-1"><font size="1">Layovers</font><h2><span id="stops">'+stops+'</span></h2>Stop(s)</div><div class="col-lg-2"><font size="1">Indian Rupees</font><h2>&#8377; <span id="price">'+price+'</span></h2>Price</div></div></div>';
 		return card_body;
 	}
 	</script>
 	<div class="container">
-		<div class="card bg-info text-white">
+		<div class="card bg-danger text-white">
 			<form action="search" method="post" onsubmit="return false;" id="myform" autocomplete="off">
 			<div class="card-header">
 				Modify Search
@@ -402,7 +402,7 @@ body {
 						<input type="number" class="form-control" value="0" placeholder="Infant" id="infant" name="infant" min="0" step="1" required="">
 					</div>
 					<div class="col-lg-2">
-						<button onclick="myFormButton()" class="btn btn-primary" style="width:100%">Search</button>
+						<button onclick="myFormButton()" class="btn btn-warning" style="width:100%">Search</button>
 					</div>
 					
 				</div>
