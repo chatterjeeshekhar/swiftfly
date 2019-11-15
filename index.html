@@ -127,6 +127,88 @@
 				}
 			}
 		}
+		function getCityCode(id){
+			document.getElementById(id).value = document.getElementById(id).value.toUpperCase();
+			var select = document.getElementById(id);
+			var str = select.value;
+			if(str.length>=3){
+				document.getElementById(id).classList.add("loadingBox");
+				$.get("ajax/hotels/autoComplete.php?q="+str, function(data){
+					//alert(data);
+					//alert("Checkpoint1");
+					var j = JSON.parse(data);
+					if(j["status"]=="300"){
+						//alert("Checkpoint2");
+						//alert(j["msg"]);
+						clearCityOptions(id);
+						addCityOptions(id, j["msg"]);
+					} else {
+						clearCityOptions(id);
+					}
+					document.getElementById(id).classList.remove("loadingBox");
+				});
+			}
+		}
+		function addCityOptions(id, data){
+			//alert("Checkpoint4");
+			str = id+"list";
+			$("#"+str).find("option").remove();
+              $("#"+str).append($("<option/>").attr("value", "").text("---Select City---"));
+              var j = JSON.parse(JSON.stringify(data));
+              //alert(j["count"]);
+              //alert(j[0]);
+              if(j["count"]==0){
+              	Swal.fire({
+				  title: 'Error!',
+				  text: 'City not found',
+				  icon: 'error',
+				  confirmButtonText: 'Ok'
+				});
+              }
+              for($i=0; $i<j["count"]; $i++) {
+                $("#"+str).append($("<option/>").attr({"value":j["rows"][$i].dest_id}).text(j["rows"][$i].label));
+              }             
+		}
+		function clearCityOptions(id){
+			//alert(id);
+			//alert("Checkpoint3");
+			document.getElementById(id+'list').innerHTML = "";
+		}
+		function submitHotel(){
+			var hotel = document.getElementById("hotel").value;
+			var purpose = document.getElementById("purpose").value;
+			var arrival_date = document.getElementById("arrival_date").value;
+			var departure_date = document.getElementById("departure_date").value;
+			var adult = parseInt(document.getElementById("adults3").innerHTML);
+			var child = parseInt(document.getElementById("children3").innerHTML);
+			var room = parseInt(document.getElementById("rooms3").innerHTML);
+
+			if(hotel=="" || arrival_date=="mm/dd/yyyy" || departure_date=="mm/dd/yyyy" || adult==0){
+				Swal.fire({
+				  title: 'Error!',
+				  text: 'All fields are mandatory',
+				  icon: 'error',
+				  confirmButtonText: 'Ok'
+				});
+			} else {
+				
+				if(hotel.match(/[a-z]/i)){
+					Swal.fire({
+					  title: 'Error!',
+					  text: 'Select the city from the list',
+					  icon: 'error',
+					  confirmButtonText: 'Ok'
+					});
+				} else {
+					document.getElementById("a3").value = adult;
+					document.getElementById("c3").value = child;
+					document.getElementById("r3").value = room;
+					document.getElementById("form3").submit();
+				}
+				
+			}
+		}
+		
 	</script>
 
 	<!--<h1>Flight Ticket Booking</h1>
@@ -141,8 +223,9 @@
 				</ul>	
 				<div class="clearfix"> </div>	
 				<div class="resp-tabs-container">
+						
 					<div class="tab-1 resp-tab-content roundtrip">
-						<form action="search" method="post" id="form1" onsubmit="return false;" autocomplete="off" >
+						<form action="flights" method="post" id="form1" onsubmit="return false;" autocomplete="off" >
 							<div class="from">
 								<h3>From</h3>
 								<input type="text" id="source1" name="source" list="source1list" class="city1" onKeyUp="getCode(this.id)" placeholder="Type Departure City" required="">
@@ -169,7 +252,7 @@
 							</div>
 							<div class="class">
 								<h3>Class</h3>
-								<select id="w3_country1" id="myclass" name="myclass" onchange="change_country(this.value)" class="frm-field required">
+								<select id="myclass" name="myclass" onchange="change_country(this.value)" class="frm-field required">
 									<option value="economy">Economy</option>  
 									<option value="premiumeconomy">Premium Economy</option>   
 									<option value="business">Business</option>   
@@ -221,7 +304,7 @@
 						</form>						
 					</div>		
 					<div class="tab-1 resp-tab-content oneway">
-						<form action="search" id="form2" method="post" onsubmit="return false;" autocomplete="off">
+						<form action="flights" id="form2" method="post" onsubmit="return false;" autocomplete="off">
 							<div class="from">
 								<h3>From</h3>
 								<input type="text" id="source2" list="source2list" class="city1" name="source" onKeyUp="getCode(this.id)" placeholder="Type Departure City" required="">
@@ -238,10 +321,11 @@
 								<input id="onward2" type="text" value="mm/dd/yyyy" name="forward" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">
 								
 							</div>
+
 								
 							<div class="class">
 								<h3>Class</h3>
-								<select id="w3_country1" id="myclass" name="myclass" onchange="change_country(this.value)" class="frm-field required">
+								<select id="myclass" name="myclass" onchange="change_country(this.value)" class="frm-field required">
 									<option value="economy">Economy</option>  
 									<option value="premiumeconomy">Premium Economy</option>   
 									<option value="business">Business</option>   
@@ -292,17 +376,84 @@
 						</form>	
 								
 					</div>
+
 					<div class="tab-1 resp-tab-content hotel">
-						<form action="hotels" id="form3" method="post">
+						<form action="hotels" id="form3" method="post" onsubmit="return false;" autocomplete="off">
 							<div class="from">
-								<h3>From</h3>
-								<input type="text" id="hotels" list="hotellist" class="city1" name="q" placeholder="Type Hotel Name" required="">
+								<h3>City</h3>
+								<input type="text" id="hotel" list="hotellist" class="city1" name="dest_ids" onKeyUp="getCityCode(this.id)" placeholder="Type City Name" required="">
 								<datalist id="hotellist"></datalist>
 							</div>
+							<div class="to">
+								<h3>Purpose</h3>
+								<select name="purpose" id="purpose" class="city1">
+									<option value="leisure">Leisure</option>
+									<option value="business">Business</option>
+								</select>
+							</div>
+							<div class="date">
+								<div class="depart">
+									<h3>Check-in</h3>
+									<input id="arrival_date" type="text" name="arrival_date" value="mm/dd/yyyy" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">
+									
+								</div>
+								<div class="return">
+									<h3>Check-out</h3>
+									<input id="departure_date" type="text" name="departure_date" value="mm/dd/yyyy" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">
+									
+								</div>
+								<div class="clear"></div>
+							</div>
+							<div class="class">
+								<h3>Order</h3>
+								<select id="order_by" name="order_by" class="frm-field required">
+									<option value="popularity">Popularity</option>    
+									<option value="price">Price</option> 
+									<option value="distance">Distance from Centre</option>   
+									<option value="deals">Deals</option> 
+									<option value="review_score">Score</option>  						
+								</select>
+							</div>=
+							<div class="numofppl">
+								<div class="adults">
+									<h3>Adult:(18+ yrs)</h3>
+									<div class="quantity"> 
+										<div class="quantity-select">                           
+											<div class="entry value-minus">&nbsp;</div>
+											<div class="entry value" id="adults3">2</div>
+											<div class="entry value-plus active">&nbsp;</div>
+										</div>
+									</div>
+								</div>
+								<input type="hidden" name="guest_qty" id="a3">
+								<input type="hidden" name="children_qty" id="c3">
+								<input type="hidden" name="rooms" id="r3">
+								<div class="child">
+									<h3>Child:(<18 yrs)</h3>
+									<div class="quantity"> 
+										<div class="quantity-select">                           
+											<div class="entry value-minus">&nbsp;</div>
+											<div class="entry value" id="children3">0</div>
+											<div class="entry value-plus active">&nbsp;</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="class">
+									<h3>Rooms</h3>
+									<div class="quantity"> 
+										<div class="quantity-select">                           
+											<div class="entry value-minus">&nbsp;</div>
+											<div class="entry value" id="rooms3">1</div>
+											<div class="entry value-plus active">&nbsp;</div>
+										</div>
+									</div>
+								</div>
 							<div class="clear"></div>
-							<button type="submit" class="submitBtn">Search Hotels</button>
+							<button type="button" class="submitBtn" onclick="submitHotel()">Search Hotels</button>
 						</form>
-					</div>	
+					</div>
+					
 		
 				</div>						
 			</div>
@@ -327,7 +478,7 @@
 				<script src="js/jquery-ui.js"></script>
 				  <script>
 						  $(function() {
-							$( "#datepicker,#datepicker1,#datepicker2,#datepicker3,#onward1,#onward2,#comeback1" ).datepicker();
+							$( "#datepicker,#datepicker1,#datepicker2,#datepicker3,#onward1,#onward2,#comeback1, #departure_date, #arrival_date" ).datepicker();
 						  });
 
 				  </script>

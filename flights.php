@@ -351,7 +351,7 @@ body {
 	</script>
 	<div class="container">
 		<div class="card bg-danger text-white">
-			<form action="search" method="post" onsubmit="return false;" id="myform" autocomplete="off">
+			<form action="flights" method="post" onsubmit="return false;" id="myform" autocomplete="off">
 			<div class="card-header">
 				Modify Search
 			</div>

@@ -126,7 +126,7 @@ h3 {
 .from,.date,.depart{
 	margin-right:4%;
 }
-input[type="text"]{
+input[type="text"], select{
 	padding:10px;
 	width:93%;
 	float:left;
@@ -425,7 +425,7 @@ form.blackbg{
 		font-size: 43px;
 		margin-top:40px;
 	}
-	input[type="text"] {
+	input[type="text"], select {
 		padding: 10px;
 		width: 90%;
 		float: left;
@@ -481,7 +481,7 @@ form.blackbg{
 		padding: 7px 7px;
 		margin: 0 0.7em 0;
 	}
-	 input[type="text"] {
+	 input[type="text"], select {
 		padding: 10px;
 		width: 86%;
 		float: left;
@@ -544,7 +544,7 @@ form.blackbg{
 		float: left;
 		margin-bottom: 40px;
 	}
-	input[type="text"] {
+	input[type="text"], select {
 		padding: 10px;
 		width: 91.5%;
 	}
