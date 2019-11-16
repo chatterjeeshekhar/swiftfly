@@ -242,7 +242,7 @@ function processData($r){
 		if($r[$i]->price_breakdown->all_inclusive_price!=null){
 			$price =  $r[$i]->price_breakdown->all_inclusive_price;
 		} else {
-			$price = "0.00";
+			$price = "NaN";
 		}
 		$tempArr = array("name" => $r[$i]->hotel_name_trans, "address" => $r[$i]->address_trans, "price" => $price, "currency" => $r[$i]->currency_code, "score" => $r[$i]->review_score, "free_cancel" => $r[$i]->is_free_cancellable, "img" => $r[$i]->main_photo_url);
 		//print_r($tempArr);
