@@ -132,7 +132,7 @@ function getCityCode(id){
 		<div class="card bg-danger text-white">
 			<form action="hotels" method="post" onsubmit="return false;" id="form3" autocomplete="off">
 			<div class="card-header">
-				Modify Search
+				New Search
 			</div>
 			<div class="card-body">
 				<div class="row" id="modifyRow">
@@ -178,7 +178,7 @@ function getCityCode(id){
 						<input type="number" class="form-control" value="0" placeholder="Child" id="child" name="children_qty" min="0" step="1" required="">
 					</div>
 					<div class="col-lg-1">
-						<span>Infants</span>
+						<span>Rooms</span>
 					</div>
 					<div class="col-lg-1">
 						<input type="number" class="form-control" value="0" placeholder="Rooms" id="rooms" name="rooms" min="0" step="1" required="">
