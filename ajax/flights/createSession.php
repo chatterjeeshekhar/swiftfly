@@ -31,7 +31,7 @@ function createSession($return, $date, $source, $destination, $class, $children,
 		CURLOPT_HTTPHEADER => array(
 			"content-type: application/x-www-form-urlencoded",
 			"x-rapidapi-host: skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
-			"x-rapidapi-key: FUtTTNdLztmsh6S1nSNSqa78mgO5p1xZXFMjsnsVQl6Hlw3Nvz"
+			"x-rapidapi-key: 4e29a7917fmsha100132be880c55p1409edjsn01cb4c45395f"
 		),
 	));
 	$response = curl_exec($curl);

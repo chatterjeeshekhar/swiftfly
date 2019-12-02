@@ -15,13 +15,13 @@ curl_setopt_array($curl, array(
 	CURLOPT_CUSTOMREQUEST => "GET",
 	CURLOPT_HTTPHEADER => array(
 		"x-rapidapi-host: apidojo-booking-v1.p.rapidapi.com",
-		"x-rapidapi-key: FUtTTNdLztmsh6S1nSNSqa78mgO5p1xZXFMjsnsVQl6Hlw3Nvz"
+		"x-rapidapi-key: 4e29a7917fmsha100132be880c55p1409edjsn01cb4c45395f"
 	),
 ));
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
-
+//print_r($response);
 curl_close($curl);
 
 if ($err) {
@@ -31,6 +31,7 @@ if ($err) {
 }
 
 function processData($r){
+	//$r = json_decode($r, true);
 	$arr = array();
 	for ($i=0; $i<count($r); $i++){
 		if($r[$i]->dest_type=="city"){
